@@ -2,7 +2,7 @@
 
 import { useState } from "react"
 import { useAuth } from "@/contexts/auth-context"
-// Navbar removed: global Header is provided by app layout
+import { Navbar } from "@/components/layout/navbar"
 import { AdminSidebar } from "@/components/admin/admin-sidebar"
 import { StatsCards } from "@/components/admin/stats-cards"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
@@ -81,7 +81,7 @@ export default function AdminDashboard() {
 
   return (
     <div className="min-h-screen bg-gray-50">
-  {/* Navbar removed: global Header is provided by app layout */}
+      <Navbar />
 
       <div className="flex">
         <AdminSidebar collapsed={sidebarCollapsed} onToggleCollapse={() => setSidebarCollapsed(!sidebarCollapsed)} />

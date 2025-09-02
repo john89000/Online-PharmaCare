@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react"
 import { useAuth } from "@/contexts/auth-context"
-// Navbar removed: global Header is provided by app layout
+import { Navbar } from "@/components/layout/navbar"
 import { AdminSidebar } from "@/components/admin/admin-sidebar"
 import { OrderService } from "@/services/payment-service"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
@@ -159,7 +159,7 @@ export default function AdminOrdersPage() {
   if (isLoading) {
     return (
       <div className="min-h-screen bg-gray-50">
-        {/* Navbar removed: global Header is provided by app layout */}
+        <Navbar />
         <div className="flex">
           <AdminSidebar collapsed={sidebarCollapsed} onToggleCollapse={() => setSidebarCollapsed(!sidebarCollapsed)} />
           <main className="flex-1 p-6">
@@ -177,7 +177,7 @@ export default function AdminOrdersPage() {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* Navbar removed: global Header is provided by app layout */}
+      <Navbar />
 
       <div className="flex">
         <AdminSidebar collapsed={sidebarCollapsed} onToggleCollapse={() => setSidebarCollapsed(!sidebarCollapsed)} />

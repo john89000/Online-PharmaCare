@@ -3,6 +3,7 @@
 import { useState, useMemo } from "react"
 import { useAuth } from "@/contexts/auth-context"
 import { useCart } from "@/contexts/cart-context"
+import { Navbar } from "@/components/layout/navbar"
 import { ProductCard } from "@/components/products/product-card"
 import { ProductFiltersComponent } from "@/components/products/product-filters"
 import { mockProducts, productCategories } from "@/data/products"
@@ -96,6 +97,8 @@ export default function ProductsPage() {
 
   return (
     <div className="min-h-screen bg-gray-50">
+      <Navbar />
+
       <div className="container mx-auto px-4 py-8">
         {/* Header */}
         <div className="mb-8">
@@ -172,7 +175,7 @@ export default function ProductsPage() {
                   <ProductCard
                     key={product.id}
                     product={product}
-                    onAddToCart={user.role === "CUSTOMER" ? handleAddToCart : undefined}
+                    onAddToCart={user.role === "customer" ? handleAddToCart : undefined}
                   />
                 ))}
               </div>

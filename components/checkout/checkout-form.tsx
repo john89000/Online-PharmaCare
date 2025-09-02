@@ -120,48 +120,48 @@ export function CheckoutForm() {
     setIsSubmitting(true)
 
     try {
-      // Create order with proper structure
+      // <CHANGE> Create order with proper structure
       const shippingInfo: ShippingInfo = {
         fullName: formData.fullName,
         email: formData.email,
         phone: formData.phone,
         address: formData.address,
         city: formData.city,
-        postalCode: formData.postalCode,
+        postalCode: formData.postalCode
       }
 
       const paymentInfo: PaymentInfo = {
         method: formData.paymentMethod,
-        status: "pending",
+        status: 'pending',
         amount: finalTotal,
-        currency: "KES",
-        mpesaPhone: formData.paymentMethod === "mpesa" ? formData.mpesaPhone : undefined,
+        currency: 'KES',
+        mpesaPhone: formData.paymentMethod === 'mpesa' ? formData.mpesaPhone : undefined
       }
 
-      const orderItems: OrderItem[] = items.map((item) => ({
+      const orderItems: OrderItem[] = items.map(item => ({
         productId: item.product.id,
         productName: item.product.name,
         productImage: item.product.imageUrl,
         quantity: item.quantity,
         price: item.product.price,
-        requiresPrescription: item.product.requiresPrescription,
+        requiresPrescription: item.product.requiresPrescription
       }))
 
-      const orderData: Omit<Order, "id" | "createdAt" | "updatedAt"> = {
+      const orderData: Omit<Order, 'id' | 'createdAt' | 'updatedAt'> = {
         userId: user!.id,
         items: orderItems,
         shippingInfo,
         paymentInfo,
-        status: "pending",
+        status: 'pending',
         totalAmount: totalPrice,
         deliveryFee,
         finalTotal,
         deliveryInstructions: formData.deliveryInstructions || undefined,
-        prescriptionFiles: formData.prescriptionFiles.map((file) => file.name),
+        prescriptionFiles: formData.prescriptionFiles.map(file => file.name)
       }
 
       const order = await OrderService.createOrder(orderData)
-
+      
       // Redirect to payment page
       router.push(`/payment/${order.id}`)
     } catch (error) {
@@ -359,74 +359,7 @@ export function CheckoutForm() {
                     {formData.prescriptionFiles.map((file, index) => (
                       <div key={index} className="flex items-center justify-between p-2 bg-gray-50 rounded">
                         <span className="text-sm">{file.name}</span>
-                        <Button type="button" variant="ghost" size="sm" onClick={() => removeFile(index)}>
-                          Remove
-                        </Button>
-                      </div>
-                    ))}
-                  </div>
-                )}
-              </CardContent>
-            </Card>
-          )}
-        </div>
-
-        {/* Right Column - Order Summary */}
-        <div className="space-y-6">
-          <Card>
-            <CardHeader>
-              <CardTitle>Order Summary</CardTitle>
-              <CardDescription>Review your items and total</CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <div className="space-y-3">
-                {items.map((item) => (
-                  <div key={item.product.id} className="flex items-center justify-between">
-                    <div>
-                      <p className="text-sm font-medium">{item.product.name}</p>
-                      <p className="text-xs text-muted-foreground">Qty: {item.quantity}</p>
-                    </div>
-                    <div className="text-sm">{formatPrice(item.product.price * item.quantity)}</div>
-                  </div>
-                ))}
-              </div>
-
-              <div className="border-t pt-3">
-                <div className="flex justify-between text-sm">
-                  <span>Subtotal</span>
-                  <span>{formatPrice(totalPrice)}</span>
-                </div>
-                <div className="flex justify-between text-sm">
-                  <span>Delivery</span>
-                  <span>{formatPrice(deliveryFee)}</span>
-                </div>
-                <div className="flex justify-between font-semibold mt-2">
-                  <span>Total</span>
-                  <span>{formatPrice(finalTotal)}</span>
-                </div>
-              </div>
-
-              <div className="pt-2">
-                <label className="flex items-center gap-2 text-sm">
-                  <input
-                    type="checkbox"
-                    checked={formData.agreeToTerms}
-                    onChange={(e) => handleInputChange("agreeToTerms", e.target.checked)}
-                  />
-                  <span>I agree to the terms and conditions</span>
-                </label>
-                {errors.agreeToTerms && <p className="text-sm text-red-600 mt-1">{errors.agreeToTerms}</p>}
-              </div>
-
-              <div className="pt-2">
-                <Button type="submit" disabled={isSubmitting} className="w-full">
-                  {isSubmitting ? "Placing order..." : `Pay ${formatPrice(finalTotal)}`}
-                </Button>
-              </div>
-            </CardContent>
-          </Card>
-        </div>
-      </div>
-    </form>
-  )
-}
+                        <Button
+                          type="button"
+                          variant="ghost"
+                          size="sm\
