@@ -2,7 +2,7 @@
 
 import { useAuth } from "@/contexts/auth-context"
 import { useCart } from "@/contexts/cart-context"
-// Navbar removed: global Header is provided by app layout
+import { Navbar } from "@/components/layout/navbar"
 import { CheckoutForm } from "@/components/checkout/checkout-form"
 import { Button } from "@/components/ui/button"
 import { ArrowLeft, ShoppingCart } from "lucide-react"
@@ -35,6 +35,7 @@ export default function CheckoutPage() {
   if (items.length === 0) {
     return (
       <div className="min-h-screen bg-gray-50">
+        <Navbar />
         <div className="container mx-auto px-4 py-16 text-center">
           <ShoppingCart className="h-16 w-16 text-muted-foreground mx-auto mb-4" />
           <h1 className="text-2xl font-bold text-gray-900 mb-2">Your cart is empty</h1>
@@ -49,6 +50,7 @@ export default function CheckoutPage() {
 
   return (
     <div className="min-h-screen bg-gray-50">
+      <Navbar />
 
       <div className="container mx-auto px-4 py-8">
         {/* Header */}

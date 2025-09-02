@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react"
 import { useAuth } from "@/contexts/auth-context"
-// Navbar removed: global Header is provided by app layout
+import { Navbar } from "@/components/layout/navbar"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
@@ -117,6 +117,7 @@ export default function OrdersPage() {
   if (isLoading) {
     return (
       <div className="min-h-screen bg-gray-50">
+        <Navbar />
         <div className="container mx-auto px-4 py-16 text-center">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-emerald-600 mx-auto"></div>
           <p className="mt-4 text-muted-foreground">Loading your orders...</p>
@@ -127,6 +128,7 @@ export default function OrdersPage() {
 
   return (
     <div className="min-h-screen bg-gray-50">
+      <Navbar />
 
       <div className="container mx-auto px-4 py-8">
         {/* Header */}

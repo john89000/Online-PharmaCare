@@ -91,7 +91,13 @@ export function LoginForm({ onToggleMode, redirectUrl }: LoginFormProps) {
           </button>
         </div>
 
-  {/* Demo accounts removed */}
+        <div className="mt-4 p-3 bg-muted rounded-lg text-xs">
+          <p className="font-medium mb-1">Demo Accounts:</p>
+          <p>Admin: admin@pharmacy.com</p>
+          <p>Customer: customer@example.com</p>
+          <p>Delivery: delivery@pharmacy.com</p>
+          <p className="mt-1 text-muted-foreground">Password: password123</p>
+        </div>
       </CardContent>
     </Card>
   )

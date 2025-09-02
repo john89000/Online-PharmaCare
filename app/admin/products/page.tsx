@@ -1,7 +1,7 @@
 "use client"
 
 import { useAuth } from "@/contexts/auth-context"
-// Navbar removed: global Header is provided by app layout
+import { Navbar } from "@/components/layout/navbar"
 import { AdminSidebar } from "@/components/admin/admin-sidebar"
 import { ProductManagement } from "@/components/admin/product-management"
 import { useState } from "react"
@@ -20,7 +20,7 @@ export default function AdminProductsPage() {
 
   return (
     <div className="min-h-screen bg-gray-50">
-  {/* Navbar removed: global Header is provided by app layout */}
+      <Navbar />
 
       <div className="flex">
         <AdminSidebar collapsed={sidebarCollapsed} onToggleCollapse={() => setSidebarCollapsed(!sidebarCollapsed)} />

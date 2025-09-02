@@ -1,6 +1,7 @@
 "use client"
 
 import { useAuth } from "@/contexts/auth-context"
+import { Navbar } from "@/components/layout/navbar"
 import { mockProducts } from "@/data/products"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
@@ -9,7 +10,8 @@ import { Separator } from "@/components/ui/separator"
 import { ShoppingCart, ArrowLeft, AlertTriangle, Package, Calendar, Building, Pill } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
-import { useRouter, notFound } from "next/navigation"
+import { useRouter } from "next/navigation"
+import { notFound } from "next/navigation"
 
 interface ProductDetailPageProps {
   params: {
@@ -41,18 +43,14 @@ export default function ProductDetailPage({ params }: ProductDetailPageProps) {
   }
 
   const handleAddToCart = () => {
-    // This page relies on the CartProvider addToCart being available in the client tree
-    // We'll lazily import the cart context to avoid module ordering issues
-    import("@/contexts/cart-context").then((mod) => {
-      const { useCart } = mod
-      const { addToCart } = useCart()
-      addToCart(product)
-      router.push("/products")
-    })
+    // TODO: Implement cart functionality in next milestone
+    console.log("Adding to cart:", product.name)
   }
 
   return (
     <div className="min-h-screen bg-gray-50">
+      <Navbar />
+
       <div className="container mx-auto px-4 py-8">
         {/* Breadcrumb */}
         <div className="mb-6">
@@ -137,7 +135,7 @@ export default function ProductDetailPage({ params }: ProductDetailPageProps) {
             </Card>
 
             {/* Add to Cart */}
-            {user.role === "CUSTOMER" && (
+            {user.role === "customer" && (
               <div className="space-y-4">
                 <Button
                   onClick={handleAddToCart}

@@ -14,20 +14,15 @@ import {
 import { Badge } from "@/components/ui/badge"
 import { User, LogOut, Settings, Package, Truck } from "lucide-react"
 import Link from "next/link"
-import { useState } from "react"
-import DashboardPanel from "@/components/dashboard-panel"
 
 export function Navbar() {
   const { user, logout } = useAuth()
-  const [isDashboardOpen, setIsDashboardOpen] = useState(false)
-
-  const accountHref = user?.role === "ADMIN" ? "/admin" : user?.role === "DELIVERY" ? "/delivery" : "/customer"
 
   const getRoleColor = (role: string) => {
     switch (role) {
-      case "ADMIN":
+      case "admin":
         return "bg-red-100 text-red-800"
-      case "DELIVERY":
+      case "delivery":
         return "bg-blue-100 text-blue-800"
       default:
         return "bg-green-100 text-green-800"
@@ -36,9 +31,9 @@ export function Navbar() {
 
   const getRoleIcon = (role: string) => {
     switch (role) {
-      case "ADMIN":
+      case "admin":
         return <Settings className="h-4 w-4" />
-      case "DELIVERY":
+      case "delivery":
         return <Truck className="h-4 w-4" />
       default:
         return <User className="h-4 w-4" />
@@ -58,14 +53,15 @@ export function Navbar() {
           {/* Navigation Links */}
           {user && (
             <div className="hidden md:flex items-center space-x-6">
-              <button onClick={() => setIsDashboardOpen(true)} className="text-gray-700 hover:text-emerald-600 font-medium flex items-center gap-2">
-                <Package className="h-5 w-5" />
-                <span className="hidden lg:inline">Dashboard</span>
-              </button>
               <Link href="/products" className="text-gray-700 hover:text-emerald-600 font-medium">
                 Products
               </Link>
-              {user.role === "DELIVERY" && (
+              {user.role === "admin" && (
+                <Link href="/admin" className="text-gray-700 hover:text-emerald-600 font-medium">
+                  Dashboard
+                </Link>
+              )}
+              {user.role === "delivery" && (
                 <Link href="/delivery" className="text-gray-700 hover:text-emerald-600 font-medium">
                   Deliveries
                 </Link>
@@ -76,7 +72,7 @@ export function Navbar() {
           {/* User Menu */}
           {user ? (
             <div className="flex items-center space-x-4">
-              {user.role === "CUSTOMER" && <CartDrawer />}
+              {user.role === "customer" && <CartDrawer />}
 
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
@@ -89,35 +85,29 @@ export function Navbar() {
                     <div className="hidden md:flex flex-col items-start">
                       <span className="text-sm font-medium">{user.name}</span>
                       <Badge variant="secondary" className={`text-xs ${getRoleColor(user.role)}`}>
-                          <span className="flex items-center space-x-1">
+                        <span className="flex items-center space-x-1">
                           {getRoleIcon(user.role)}
-                          <span className="capitalize">{user.role.toLowerCase()}</span>
+                          <span className="capitalize">{user.role}</span>
                         </span>
                       </Badge>
                     </div>
                   </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="end" className="w-56">
-                  <DropdownMenuItem asChild>
-                    <Link href={accountHref} className="flex items-center">
-                      <User className="mr-2 h-4 w-4" />
-                      Manage account
-                    </Link>
+                  <DropdownMenuItem>
+                    <User className="mr-2 h-4 w-4" />
+                    Profile
                   </DropdownMenuItem>
-
-                  {user.role === "ADMIN" && (
-                    <DropdownMenuItem asChild>
-                      <Link href="/admin" className="flex items-center">
-                        <Settings className="mr-2 h-4 w-4" />
-                        Admin Settings
-                      </Link>
+                  {user.role === "admin" && (
+                    <DropdownMenuItem>
+                      <Settings className="mr-2 h-4 w-4" />
+                      Admin Settings
                     </DropdownMenuItem>
                   )}
-
                   <DropdownMenuSeparator />
                   <DropdownMenuItem onClick={logout} className="text-red-600">
                     <LogOut className="mr-2 h-4 w-4" />
-                    Logout
+                    Sign Out
                   </DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>
@@ -134,7 +124,6 @@ export function Navbar() {
           )}
         </div>
       </div>
-  <DashboardPanel open={isDashboardOpen} onClose={() => setIsDashboardOpen(false)} role={user?.role} />
     </nav>
   )
 }

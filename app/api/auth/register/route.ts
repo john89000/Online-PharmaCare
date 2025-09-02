@@ -1,11 +1,10 @@
 import { type NextRequest, NextResponse } from "next/server"
 import bcrypt from "bcryptjs"
-import type { UserRole } from "@prisma/client"
 import { prisma } from "@/lib/prisma"
 
 export async function POST(request: NextRequest) {
   try {
-    const { email, password, name, role, phone } = await request.json()
+    const { email, password, name, role, phone, address } = await request.json()
 
     if (!email || !password || !name) {
       return NextResponse.json({ error: "Email, password, and name are required" }, { status: 400 })
@@ -23,17 +22,15 @@ export async function POST(request: NextRequest) {
     // Hash password
     const hashedPassword = await bcrypt.hash(password, 12)
 
-  // Normalize role to match Prisma enum values (expect uppercase)
-  const normalizedRole: UserRole = role ? (String(role).toUpperCase() as UserRole) : ("CUSTOMER" as UserRole)
-
-    // Create user (only send fields that exist on the Prisma model)
+    // Create user
     const user = await prisma.user.create({
       data: {
         email,
         password: hashedPassword,
         name,
-        role: normalizedRole,
+        role: role || "CUSTOMER",
         phone,
+        address,
       },
     })
 

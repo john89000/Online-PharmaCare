@@ -1,6 +1,7 @@
 "use client"
 
 import { useAuth } from "@/contexts/auth-context"
+import { Navbar } from "@/components/layout/navbar"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Package, Shield, Truck, Users, ArrowRight, Heart, Clock, CheckCircle } from "lucide-react"
@@ -67,51 +68,27 @@ export default function HomePage() {
           <div className="text-center">
             <h2 className="text-2xl font-bold text-gray-900 mb-8">Join as</h2>
             <div className="grid md:grid-cols-3 gap-6 max-w-4xl mx-auto">
-              <Card
-                className="group hover:shadow-lg transition-shadow cursor-pointer hover:bg-emerald-50 active:bg-emerald-100 focus:outline-none focus:ring-2 focus:ring-emerald-200"
-                onClick={() => router.push("/auth")}
-                tabIndex={0}
-                role="button"
-                onKeyDown={(e) => {
-                  if ((e as any).key === "Enter") router.push("/auth")
-                }}
-              >
+              <Card className="hover:shadow-lg transition-shadow cursor-pointer" onClick={() => router.push("/auth")}>
                 <CardHeader className="text-center">
-                  <Users className="h-10 w-10 text-emerald-600 group-hover:text-emerald-800 mx-auto mb-2" />
-                  <CardTitle className="group-hover:text-emerald-700">Customer</CardTitle>
-                  <CardDescription className="group-hover:text-emerald-600">Browse and order medications online</CardDescription>
+                  <Users className="h-10 w-10 text-emerald-600 mx-auto mb-2" />
+                  <CardTitle>Customer</CardTitle>
+                  <CardDescription>Browse and order medications online</CardDescription>
                 </CardHeader>
               </Card>
 
-              <Card
-                className="group hover:shadow-lg transition-shadow cursor-pointer hover:bg-emerald-50 active:bg-emerald-100 focus:outline-none focus:ring-2 focus:ring-emerald-200"
-                onClick={() => router.push("/auth")}
-                tabIndex={0}
-                role="button"
-                onKeyDown={(e) => {
-                  if ((e as any).key === "Enter") router.push("/auth")
-                }}
-              >
+              <Card className="hover:shadow-lg transition-shadow cursor-pointer" onClick={() => router.push("/auth")}>
                 <CardHeader className="text-center">
-                  <Package className="h-10 w-10 text-emerald-600 group-hover:text-emerald-800 mx-auto mb-2" />
-                  <CardTitle className="group-hover:text-emerald-700">Admin</CardTitle>
-                  <CardDescription className="group-hover:text-emerald-600">Manage inventory and oversee operations</CardDescription>
+                  <Package className="h-10 w-10 text-emerald-600 mx-auto mb-2" />
+                  <CardTitle>Admin</CardTitle>
+                  <CardDescription>Manage inventory and oversee operations</CardDescription>
                 </CardHeader>
               </Card>
 
-              <Card
-                className="group hover:shadow-lg transition-shadow cursor-pointer hover:bg-emerald-50 active:bg-emerald-100 focus:outline-none focus:ring-2 focus:ring-emerald-200"
-                onClick={() => router.push("/auth")}
-                tabIndex={0}
-                role="button"
-                onKeyDown={(e) => {
-                  if ((e as any).key === "Enter") router.push("/auth")
-                }}
-              >
+              <Card className="hover:shadow-lg transition-shadow cursor-pointer" onClick={() => router.push("/auth")}>
                 <CardHeader className="text-center">
-                  <Truck className="h-10 w-10 text-emerald-600 group-hover:text-emerald-800 mx-auto mb-2" />
-                  <CardTitle className="group-hover:text-emerald-700">Delivery Staff</CardTitle>
-                  <CardDescription className="group-hover:text-emerald-600">Handle deliveries and customer service</CardDescription>
+                  <Truck className="h-10 w-10 text-emerald-600 mx-auto mb-2" />
+                  <CardTitle>Delivery Staff</CardTitle>
+                  <CardDescription>Handle deliveries and customer service</CardDescription>
                 </CardHeader>
               </Card>
             </div>
@@ -124,19 +101,21 @@ export default function HomePage() {
   // Dashboard for authenticated users
   return (
     <div className="min-h-screen bg-gray-50">
+      <Navbar />
+
       <div className="container mx-auto px-4 py-8">
         <div className="mb-8">
           <h1 className="text-3xl font-bold text-gray-900 mb-2">Welcome back, {user.name}!</h1>
           <p className="text-gray-600">
-            {user.role === "ADMIN" && "Manage your pharmacy operations from here."}
-            {user.role === "CUSTOMER" && "Browse our wide selection of quality medications."}
-            {user.role === "DELIVERY" && "View your delivery assignments and routes."}
+            {user.role === "admin" && "Manage your pharmacy operations from here."}
+            {user.role === "customer" && "Browse our wide selection of quality medications."}
+            {user.role === "delivery" && "View your delivery assignments and routes."}
           </p>
         </div>
 
         {/* Role-specific dashboard content */}
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {user.role === "CUSTOMER" && (
+          {user.role === "customer" && (
             <>
               <Card>
                 <CardHeader>
@@ -170,7 +149,7 @@ export default function HomePage() {
             </>
           )}
 
-          {user.role === "ADMIN" && (
+          {user.role === "admin" && (
             <>
               <Card>
                 <CardHeader>
@@ -204,7 +183,7 @@ export default function HomePage() {
             </>
           )}
 
-          {user.role === "DELIVERY" && (
+          {user.role === "delivery" && (
             <>
               <Card>
                 <CardHeader>

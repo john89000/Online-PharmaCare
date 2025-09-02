@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react"
 import { useAuth } from "@/contexts/auth-context"
 import { useCart } from "@/contexts/cart-context"
-// Navbar removed: global Header is provided by app layout
+import { Navbar } from "@/components/layout/navbar"
 import { MpesaPayment } from "@/components/payment/mpesa-payment"
 import { StripePayment } from "@/components/payment/stripe-payment"
 import { OrderService } from "@/services/payment-service"
@@ -83,6 +83,7 @@ export default function PaymentPage({ params }: PaymentPageProps) {
   if (paymentCompleted) {
     return (
       <div className="min-h-screen bg-gray-50">
+        <Navbar />
         <div className="container mx-auto px-4 py-16 text-center">
           <CheckCircle className="h-16 w-16 text-green-600 mx-auto mb-4" />
           <h1 className="text-3xl font-bold text-gray-900 mb-2">Payment Successful!</h1>
@@ -102,6 +103,7 @@ export default function PaymentPage({ params }: PaymentPageProps) {
 
   return (
     <div className="min-h-screen bg-gray-50">
+      <Navbar />
 
       <div className="container mx-auto px-4 py-8">
         {/* Header */}

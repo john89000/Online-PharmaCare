@@ -76,11 +76,11 @@ async function main() {
   ]
 
   for (const product of products) {
-    // name is not guaranteed to be unique in the schema, so avoid using upsert with name
-    const existingProduct = await prisma.product.findFirst({ where: { name: product.name } })
-    if (!existingProduct) {
-      await prisma.product.create({ data: product })
-    }
+    await prisma.product.upsert({
+      where: { name: product.name },
+      update: {},
+      create: product,
+    })
   }
 
   const demoUsers = [
@@ -130,6 +130,12 @@ async function main() {
   }
 
   console.log("[v0] Database seeded successfully!")
+  console.log("[v0] Demo users created:")
+  console.log("  - admin@pharmacy.com (ADMIN)")
+  console.log("  - customer@example.com (CUSTOMER)")
+  console.log("  - delivery@pharmacy.com (DELIVERY)")
+  console.log("  - staff@pharmacy.com (STAFF)")
+  console.log("  - All passwords: password123")
 }
 
 main()
