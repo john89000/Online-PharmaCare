@@ -3,11 +3,12 @@ import type { Metadata } from "next"
 import { GeistSans } from "geist/font/sans"
 import { GeistMono } from "geist/font/mono"
 import { Analytics } from "@vercel/analytics/next"
-import { Providers } from "@/components/providers"
+import { SessionProvider } from "next-auth/react"
+import { AuthProvider } from "@/contexts/auth-context"
+import { CartProvider } from "@/contexts/cart-context"
+import { CartMergeHandler } from "@/components/cart/cart-merge-handler"
 import { Suspense } from "react"
 import "./globals.css"
-import Footer from "@/components/footer"
-import Header from "@/components/layout/header"
 
 export const metadata: Metadata = {
   title: "v0 App",
@@ -24,11 +25,14 @@ export default function RootLayout({
     <html lang="en">
       <body className={`font-sans ${GeistSans.variable} ${GeistMono.variable}`}>
         <Suspense fallback={<div>Loading...</div>}>
-          <Providers>
-            <Header />
-            {children}
-            <Footer />
-          </Providers>
+          <SessionProvider>
+            <AuthProvider>
+              <CartProvider>
+                <CartMergeHandler />
+                {children}
+              </CartProvider>
+            </AuthProvider>
+          </SessionProvider>
         </Suspense>
         <Analytics />
       </body>
